@@ -12,7 +12,10 @@ const CompanyType = new GraphQLObjectType({
     fields:{
         id: { type: GraphQLString },
         name: { type: GraphQLString },
-        description: { type: GraphQLString }
+        description: { type: GraphQLString },
+        users: {
+            type: new GraphQLList(UserType)
+        }
     }
 })
 
@@ -65,7 +68,7 @@ const RootQuery = new GraphQLObjectType({
             args: { id: { type: GraphQLString } },
 
             resolve(parentValue, args) {
-                return axios.get(`http://localhost:3000/users/${args.id}`)
+                return axios.get(`http://localhost:3000/companies/${args.id}`)
                     .then(res => res.data); //{data: {firstName:'bill}} axios response nested on .data
             }
         }
